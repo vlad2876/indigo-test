@@ -1,0 +1,36 @@
+@use '@angular/material' as mat;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+html {
+  @include mat.theme((
+    color: mat.$blue-palette,
+    typography: 'Inter',
+    density: 0
+  ));
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+}
+
+.widget-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 16px;
+  width: 240px;
+
+  mat-icon {
+    font-size: 24px;
+  }
+
+  span {
+    font-size: 16px;
+  }
+}

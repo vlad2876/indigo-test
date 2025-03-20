@@ -1,0 +1,23 @@
+<mat-card class="dates-widget">
+  <mat-card-header>
+    <mat-card-title class="widget-title">Сроки проекта</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="widget-content">
+    <div class="date-row">
+      <div class="date-label">
+        <mat-icon>calendar_today</mat-icon>
+        <span>Начало:</span>
+      </div>
+      <div class="date-value">{{ formatDate(_project()?.startDate) }}</div>
+    </div>
+    <div class="date-row">
+      <div class="date-label">
+        <mat-icon>event</mat-icon>
+        <span>Окончание:</span>
+      </div>
+      <div class="date-value">{{ formatDate(_project()?.endDate) }}</div>
+    </div>
+    <mat-progress-bar mode="determinate" [value]="progressPercent()" class="progress-bar"></mat-progress-bar>
+    <div class="remaining-days">Осталось {{ remainingDays() }} дней</div>
+  </mat-card-content>
+</mat-card>

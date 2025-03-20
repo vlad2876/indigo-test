@@ -1,0 +1,121 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+
+  .add-project-button {
+    align-self: flex-end;
+    margin-bottom: 16px;
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+    border-radius: 12px;
+
+    .empty-state-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 24px;
+      color: #6b7280;
+    }
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      margin-bottom: 24px;
+    }
+
+    button {
+      mat-icon {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    mat-expansion-panel {
+      .panel-actions {
+        display: flex;
+        gap: 8px;
+
+        button {
+          mat-icon {
+            font-size: 24px;
+          }
+        }
+      }
+
+      .empty-widgets {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px;
+        text-align: center;
+
+        mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+          margin-bottom: 16px;
+          color: #6b7280;
+        }
+
+        p {
+          margin: 0;
+        }
+      }
+
+      .widgets-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
+        padding: 16px;
+
+        .widget-wrapper {
+          position: relative;
+          min-height: 150px;
+          cursor: grab;
+
+          &:hover {
+            mat-card {
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+              transition: box-shadow 0.3s ease;
+            }
+          }
+
+          .remove-widget {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            z-index: 10;
+
+            mat-icon {
+              font-size: 20px;
+            }
+          }
+        }
+
+        .cdk-drag-placeholder {
+          opacity: 0.3;
+          background-color: #f0f7ff;
+          border: 1px solid #bce0fd;
+        }
+      }
+    }
+  }
+}

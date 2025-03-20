@@ -1,0 +1,41 @@
+.form-container {
+  padding: 24px;
+
+  .form-title {
+    margin-bottom: 24px;
+    color: #333;
+  }
+
+  form {
+    .form-field {
+      width: 100%;
+      margin-bottom: 16px;
+
+      input {
+        &[type="number"] {
+          &::-webkit-inner-spin-button,
+          &::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+      }
+    }
+
+    .form-row {
+      display: flex;
+      gap: 16px;
+
+      .form-field {
+        flex: 1;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 24px;
+    }
+  }
+}

@@ -1,0 +1,65 @@
+<div class="form-container">
+  <h2 class="form-title">{{ isEdit ? "Редактирование проекта" : "Создание проекта" }}</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-field">
+      <mat-label>Название проекта</mat-label>
+      <input matInput formControlName="name" placeholder="Введите название" />
+      @if (nameControl.invalid && nameControl.touched) {
+        <mat-error>
+          @if (nameControl.errors?.['required']) { Название обязательно }
+          @else if (nameControl.errors?.['minlength']) { Минимальная длина: 3 символа }
+        </mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Дата начала</mat-label>
+        <input matInput [matDatepicker]="startPicker" formControlName="startDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+        <mat-error *ngIf="startDateControl.errors?.['required'] && startDateControl.touched">
+          Дата начала обязательна
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Дата завершения</mat-label>
+        <input matInput [matDatepicker]="endPicker" formControlName="endDate" />
+        <mat-datepicker-toggle matIconSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+        <mat-error *ngIf="endDateControl.hasError('required')">
+          Дата завершения обязательна
+        </mat-error>
+        <mat-error *ngIf="endDateControl.hasError('minDate') && !endDateControl.hasError('required')">
+          Неверное значение
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field class="form-field">
+        <mat-label>Всего задач</mat-label>
+        <input matInput type="number" formControlName="tasksTotal" min="0" />
+        <mat-error *ngIf="tasksTotalControl.invalid && tasksTotalControl.touched">
+          Минимальное значение: 0
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field">
+        <mat-label>Завершённые задачи</mat-label>
+        <input matInput type="number" formControlName="tasksCompleted" min="0" [max]="tasksTotalControl.value || 0" />
+        <mat-error *ngIf="tasksCompletedControl.invalid && tasksCompletedControl.touched">
+          Неверное значение
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-button type="button" (click)="onCancel()">Отмена</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+        {{ isEdit ? "Сохранить" : "Создать" }}
+      </button>
+    </div>
+  </form>
+</div>

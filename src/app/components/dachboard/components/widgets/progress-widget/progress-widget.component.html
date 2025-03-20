@@ -1,0 +1,14 @@
+<mat-card class="progress-widget">
+  <mat-card-header>
+    <mat-card-title class="widget-title">Прогресс проекта</mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="widget-content">
+    <div class="progress-info">
+      <span class="tasks-count">
+        Выполнено {{ _project()?.tasksCompleted || 0 }} из {{ _project()?.tasksTotal || 0 }} задач
+      </span>
+      <mat-progress-bar mode="determinate" [value]="progressPercent()" class="progress-bar"></mat-progress-bar>
+      <div class="progress-label">{{ progressPercent() }}%</div>
+    </div>
+  </mat-card-content>
+</mat-card>

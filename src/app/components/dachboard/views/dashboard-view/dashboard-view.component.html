@@ -1,0 +1,82 @@
+<div class="dashboard-container">
+  <button mat-raised-button color="primary" (click)="openProjectDialog()" class="add-project-button">
+    <mat-icon>add</mat-icon> Новый проект
+  </button>
+
+  @if (!hasProjects()) {
+    <div class="empty-state">
+      <mat-icon class="empty-state-icon">dashboard</mat-icon>
+      <h2>Проекты отсутствуют</h2>
+      <p>Создайте новый проект, чтобы начать работу</p>
+      <button mat-raised-button color="primary" (click)="openProjectDialog()">
+        <mat-icon>add</mat-icon> Создать проект
+      </button>
+    </div>
+  } @else {
+    <div class="projects-list">
+      @for (project of projectWidgets(); track project.projectId) {
+        <mat-expansion-panel expanded="project.widgets.length !== 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ project.projectName }}</mat-panel-title>
+            <mat-panel-description>
+              <div class="panel-actions">
+                <button mat-icon-button (click)="editProject(project.projectId); $event.stopPropagation()"
+                  matTooltip="Редактировать проект">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="deleteProject(project.projectId); $event.stopPropagation()"
+                  matTooltip="Удалить проект">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                @if (!hasWidgetOfType(project.widgets, 'progress')) {
+                  <button mat-icon-button
+                    (click)="addWidgetToProject(project.projectId, 'progress'); $event.stopPropagation()"
+                    matTooltip="Добавить виджет прогресса">
+                    <mat-icon>add_chart</mat-icon>
+                  </button>
+                }
+                @if (!hasWidgetOfType(project.widgets, 'dates')) {
+                  <button mat-icon-button
+                    (click)="addWidgetToProject(project.projectId, 'dates'); $event.stopPropagation()"
+                    matTooltip="Добавить виджет сроков">
+                    <mat-icon>date_range</mat-icon>
+                  </button>
+                }
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+
+          @if (project.widgets.length === 0) {
+            <div class="empty-widgets">
+              <mat-icon>widgets</mat-icon>
+              <p>Добавьте виджеты, используя кнопки в заголовке</p>
+            </div>
+          } @else {
+            <div class="widgets-container"
+              cdkDropList
+              [cdkDropListData]="project.widgets"
+              cdkDropListOrientation="horizontal"
+              (cdkDropListDropped)="onWidgetDrop(project.projectId, $event)">
+              @for (widget of project.widgets; track widget.id) {
+                <div class="widget-wrapper" cdkDrag [cdkDragData]="widget">
+                  <button mat-icon-button class="remove-widget" (click)="removeWidget(widget.id)">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                  @if (widget.type === 'progress') {
+                    <app-progress-widget [projectId]="widget.projectId" />
+                  } @else {
+                    <app-timeline-widget [projectId]="widget.projectId" />
+                  }
+                  <div *cdkDragPreview class="widget-preview">
+                    <mat-icon>{{ widget.type === 'progress' ? 'bar_chart' : 'date_range' }}</mat-icon>
+                    <span>{{ widget.type === 'progress' ? 'Прогресс проекта' : 'Сроки проекта' }}</span>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </mat-expansion-panel>
+      }
+    </div>
+  }
+</div>
